@@ -14,7 +14,7 @@ const {QueryTypes} = require('sequelize');
         
         const data = await sequelize.query(
             `
-            select * from paluz.profesiones`,
+            select * from profesiones`,
             {
                 replacements: {
                    
@@ -64,8 +64,8 @@ const {QueryTypes} = require('sequelize');
         const data = await sequelize.query(
             `
             SELECT *
-FROM paluz.categoria
-INNER JOIN paluz.profesiones ON paluz.categoria.idcategoria = paluz.profesiones.id_categoria;
+FROM categoria
+INNER JOIN profesiones ON categoria.idcategoria = profesiones.id_categoria;
 ;`,
             {
                 replacements: {
