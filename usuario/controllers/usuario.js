@@ -16,11 +16,20 @@ async function getUsuario(req, res) {
     res.status(usuario.status).send(usuario.data);
 }
 
-
+// Obtenemos el usuario tecnico
+async function getUsuariosTecnicos(req, res) {
+    const usuario = await service.getUsuariosTecnicos(req);
+    res.status(usuario.status).send(usuario.data);
+}
 
 // Actualizamos el usuario
 async function put(req, res) {
     let usuario = await service.updateUsuario(req);
+    res.status(usuario.status).send(usuario.data);
+}
+// Actualizamos el CONTRASEña
+async function putContraseña(req, res) {
+    let usuario = await service.updateContraseña(req);
     res.status(usuario.status).send(usuario.data);
 }
 
@@ -65,8 +74,10 @@ async function getUsuarios(req, res) {
 module.exports = {
     post,
     put,
+    putContraseña,
     getUsuario,
     getUsuarios,
+    getUsuariosTecnicos,
     getRoles,
     getTipo,
     enviarCorreoCuentaCreada

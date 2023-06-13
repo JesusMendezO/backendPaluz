@@ -8,6 +8,6 @@ var api = express.Router();
 api.get('/proyectos/', Controller.getProyectos);
 api.post('/crearproyectos/', Controller.postProyectos);
 api.put('/actualizarproyectos', Controller.putProyectos);
-
+api.get('/creartabla/', Controller.creaTablas);
 
 module.exports = api;

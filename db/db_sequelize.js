@@ -2,10 +2,14 @@ const Sequelize = require('sequelize');
 
 // Datos de configuración de la BD
 const dataConex = {
-    database: 'bpt0xra71nmkav27p5xh',
-    user: 'urnbgye8updzvl6x',
-    password: '3NrBt2i6RKhJk817sA0V',
-    host: 'bpt0xra71nmkav27p5xh-mysql.services.clever-cloud.com',
+     database: 'bpt0xra71nmkav27p5xh',
+     user: 'urnbgye8updzvl6x',
+     password: '3NrBt2i6RKhJk817sA0V',
+     host: 'bpt0xra71nmkav27p5xh-mysql.services.clever-cloud.com',
+    // host: 'localhost',
+    // user: 'root',
+    //  password: 'root',
+    //  database: 'paluz',
     port: '3306',
     dialect: 'mysql'
 };

@@ -30,12 +30,17 @@ const service = require('../services/proyectos');
      let resultado = await service.putProyectos(nPregunta, params);
      res.status(resultado.status).send(resultado.data);
 }
- 
+async function creaTablas(req, res) {
+  console.log('hola')
+  const resultado = await service.crearTablas(req);
+  res.status(resultado.status).send(resultado.data);
+}
 
 module.exports = {
    
   getProyectos, 
   postProyectos,
   putProyectos,
+  creaTablas,
 
 }

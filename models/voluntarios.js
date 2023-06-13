@@ -14,6 +14,7 @@ const base_voluntariosregis = sequelize.define(
         telefono: Sequelize.STRING,
         email: Sequelize.STRING,
         ocupacion: Sequelize.STRING,
+        revisado: Sequelize.SMALLINT,
         fecha_nacimiento: Sequelize.STRING,
         fecha_creacion: Sequelize.DATE,
         fecha_modificacion: Sequelize.DATE,

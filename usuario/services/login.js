@@ -22,7 +22,7 @@ console.log(params)
     let data;
     //sconst params = req.body;
     const usuario = await base_usuarios.findOne({
-        attributes: ['id','rol','password','estado','email'],
+        attributes: ['id','nombres','rol','password','estado','email'],
         where: {
             email: params.email,
             estado: 1,
@@ -67,6 +67,7 @@ console.log(params)
 
                 const dataLogin = {
                     idToken: token,
+                    nombre:usuario.nombres,
                     usuario: usuario.email,
                     rol: usuario.rol,
                     activo:usuario.estado

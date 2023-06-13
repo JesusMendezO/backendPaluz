@@ -1,13 +1,13 @@
 'use strict';
 
 var express = require('express');
-var Controller = require('../controllers/proyectos');
+var Controller = require('../controllers/socios');
 var api = express.Router();
 
 
-api.get('/proyectos/', Controller.getProyectos);
-api.post('/crearproyectos/', Controller.postProyectos);
-api.put('/actualizarproyectos', Controller.putProyectos);
+api.get('/socios/', Controller.getSocios);
+api.post('/crearsocios/', Controller.postSocios);
+api.put('/actualizarsocios', Controller.putSocios);
 
 
 module.exports = api;

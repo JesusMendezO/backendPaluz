@@ -1,13 +1,13 @@
 "use strict";
 
-const service = require('../services/proyectos');
+const service = require('../services/socios');
 
  // ************************
   // Metodo que obtiene preguntas ha publicar en el portal
   // ************************
-  async function getProyectos(req, res) {
-    console.log('hola')
-    const resultado = await service.getProyectos(req);
+  async function getSocios(req, res) {
+    
+    const resultado = await service.getSocios(req);
     res.status(resultado.status).send(resultado.data);
 }
 
@@ -16,26 +16,26 @@ const service = require('../services/proyectos');
  // ************************
   // Metodo que inserta posible preguntas a publicar
   // ************************
-  async function postProyectos(req, res) {
-    const resultado = await service.crearProyectos(req);
+  async function postSocios(req, res) {
+    const resultado = await service.crearSocios(req);
     res.status(resultado.status).send(resultado.data);
 }
 
  // ************************
   // Metodo que actualiza posible preguntas a publicar
   // ************************
-  async function putProyectos(req, res) {
+  async function putSocios(req, res) {
      const params = req.body;
-     const nPregunta = req.params.nPregunta;
-     let resultado = await service.putProyectos(nPregunta, params);
+     const id = req.params.id;
+     let resultado = await service.putSocios(id, params);
      res.status(resultado.status).send(resultado.data);
 }
  
 
 module.exports = {
    
-  getProyectos, 
-  postProyectos,
-  putProyectos,
+  getSocios, 
+  postSocios,
+  putSocios,
 
 }

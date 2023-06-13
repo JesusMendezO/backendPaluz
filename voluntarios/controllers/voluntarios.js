@@ -13,11 +13,12 @@ async function post(req, res) {
 async function postU(req, res) {
     const usuario = await service.crearUsuario(req);
     res.status(usuario.status).send(usuario.data);
+    console.log(usuario.status,"aja llego aqui")
 
 }
 // Obtenemos el usuario
-async function getUsuario(req, res) {
-    const usuario = await service.getUsuario(req);
+async function getVoluntarios(req, res) {
+    const usuario = await service.getVoluntarios(req);
     res.status(usuario.status).send(usuario.data);
 }
 
@@ -47,11 +48,17 @@ async function enviarCorreoCuentaCreada(req, res) {
         }
     }
 }
+// Actualizamos el usuario
+async function enviarCorreoRechazo(req, res) {
+    let usuario = await service.enviarCorreoRechazo(req);
+    res.status(usuario.status).send(usuario.data);
+}
 
 module.exports = {
     post,
     postU,
     put,
-    getUsuario,
-    enviarCorreoCuentaCreada
+    getVoluntarios,
+    enviarCorreoCuentaCreada,
+    enviarCorreoRechazo
 };

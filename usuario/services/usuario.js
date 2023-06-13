@@ -9,7 +9,7 @@ const base_tipo = require('../../models/tipo');
 const bcrypt = require('bcrypt');
 const QueryTypes = require('sequelize');
 const sequelize = require('../../db/db_sequelize');
-
+const correo = require('../services/correo');
 
 // Crear Usuario
 async function crearUsuario(req) {
@@ -197,12 +197,13 @@ async function updateUsuario(req) {
     const params = req.body;
     console.log(params)
     try {
+    
         const data = await base_usuarios.update({
             rol: params.rol,
             tipo: params.tipo,
             estado: params.estado,
             fecha_modificacion: new Date()
-        }, { where: { email: params.email} });
+        }, { where: { email: params.correo} });
 
         if (data === null || data.length === 0) {
             return {
@@ -211,6 +212,57 @@ async function updateUsuario(req) {
                 data,
             };
         } else {
+            let datos ={
+                email : params.correo,
+                nombre: params.nombres,
+                token: params.token
+             }
+         console.log(datos)
+             enviarCorreo(datos);
+            return {
+                status: 200,
+                error: '',
+                data,
+            };
+        }
+    } catch (err) {
+        // do something
+        return {
+            status: 500,
+            error: err,
+            data: [],
+        };
+    }
+}
+// Actualiza la imagen del perfil del usuario
+async function updateContraseña(req) {
+    const params = req.body;
+    console.log(params)
+    const salt = await bcrypt.genSalt(10);
+    const pass= params.password
+let password = await bcrypt.hash(pass, salt);
+    try {
+    
+        const data = await base_usuarios.update({
+            password: password,
+            token:null,
+            fecha_modificacion: new Date()
+        }, { where: { token: params.token} });
+
+        if (data === null || data.length === 0) {
+            return {
+                status: 400,
+                error: 'Token Incorrecto',
+                data,
+            };
+        } else {
+        //    corrco se cambio clave let datos ={
+        //         email : params.correo,
+        //         nombre: params.nombres,
+             
+        //      }
+        //  console.log(datos)
+        //      enviarCorreo(datos);
             return {
                 status: 200,
                 error: '',
@@ -883,11 +935,70 @@ async function getUsuarios(req) {
         };
     }
 }
+
+async function getUsuariosTecnicos(req) {
+
+    try {
+        const data = await sequelize.query(
+            `
+            select * from usuarios where estado=1 and rol=1`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+
+        return {
+            status: 200,
+            error: '',
+            data:data[0],
+        };
+
+    } catch (err) {
+        // do something
+        return {
+            status: 500,
+            error: err,
+            data: [],
+        };
+    }
+}
+async function enviarCorreo(params) {
+    console.log("se Ejecuto")
+     try {
+         const res = await correo.asignarContraseña(params);
+         if (res === null || res.length < 1) {
+             return {
+                 status: 404,
+                 error: 'El correo no existe',
+                 data: res,
+             };
+         } else {
+            
+             return {
+                 status: 200,
+                 error: '',
+                 data: res
+             };
+         }
+     }
+     catch (err) {
+         return {
+             status: 500,
+             error: 'Error de conexion al servidor',
+             data: err
+         }
+     }
+ }
 module.exports = {
     crearUsuario,
     getUsuario,
     updateUsuario,
+    updateContraseña,
     getRoles,
     getUsuarios,
-    getTipo
+    getTipo,
+    getUsuariosTecnicos
 };

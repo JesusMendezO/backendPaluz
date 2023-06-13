@@ -1,5 +1,5 @@
 'use strict';
-const base_proyectos = require('../../models/proyectos');
+const base_socios = require('../../models/socios');
 const sequelize = require('../../db/db_sequelize');
 const {QueryTypes} = require('sequelize');
 // const reg_preguntaspublicacionesportal = require('../../models/reg_preguntaspublicacionesportal');
@@ -9,13 +9,12 @@ const {QueryTypes} = require('sequelize');
   // Metodo que obtiene preguntas ha publicar
   // ************************
 
-  async function getProyectos(req) {
+  async function getSocios(req) {
     try {
         
         const data = await sequelize.query(
             `
-            select * from paluz.proyectos
-            where estado=1`,
+            select * from socios`,
             {
                 replacements: {
                    
@@ -61,7 +60,7 @@ const {QueryTypes} = require('sequelize');
   // Metodo que inserta las preguntas para luego publicarlas
   // *
 
-  async function crearProyectos(req) {
+  async function crearSocios(req) {
 
     let data;
     const params = req.body;
@@ -73,22 +72,9 @@ const {QueryTypes} = require('sequelize');
           
          
    
-           data = await base_proyectos.create({
+           data = await base_socios.create({
              nombre:params.nombre,
-             descripcion :params.descripcion,
-             estado:params.estado,
-             grupos : params.grupos,
-             codigo : params.codigo,
-             fecha_inicio: params.fechain,
-             fecha_fin : params.fechafin,
-             socios : params.socios,
-             indicadores: params.indicadores,
-             coordinador:params.coordinador,
-             coordinador_ms:params.coordinador_ms,
-             coordinador_cs:params.coordinador_cs,
-             coordinador_logistica:params.coordinador_logistica,
-             sector:params.sector,
-             logo:params.log,
+             abreviatura :params.descripcion,
              fecha_registro :new Date(),
              fecha_modificacion:new Date()
            });
@@ -114,20 +100,20 @@ const {QueryTypes} = require('sequelize');
   // *
 
    
-   async function putProyectos(codigo,params) {
+   async function putSocios(id,params) {
     //const params = req.body;
-    console.log(codigo);
+    
     try {
-        const data = await base_proyectos.update({
+        const data = await base_socios.update({
            nombre: params.nombre,
-           descripcion: params.descripcion,
+           abreviatura: params.abreviatura,
            //dFecha_UltimaModificacion: new Date(),
-        }, { where: { codigo: params.codigo, estado:1  } });
+        }, { where: { id: params.codigo } });
 
         if (data === null || data.length < 1) {
             return {
                 status: 500,
-                error: "Problema al actualizarla pregunta, verifique la informacion.",
+                error: "Problema al actualizarla el socio.",
                 data,
             };
         } else {
@@ -152,89 +138,19 @@ const {QueryTypes} = require('sequelize');
   // *
 
    
-  async function eliminarPreguntasPublicadas(nPregunta) {
-    try {
-        const data = await reg_preguntaspublicacionesportal.update({
-           bPublicada: 0,
-           bActivo: 0,
-           dFecha_Eliminacion: new Date(),
-        }, { where: { nPregunta: nPregunta, bActivo:1 } });
-
-        if (data === null || data.length < 1) {
-            return {
-                status: 500,
-                error: "Problema al eliminar la pregunta, verifique la informacion.",
-                data,
-            };
-        } else {
-            return {
-                status: 200,
-                error: "",
-                data:  data,
-            };
-        }
-    } catch (err) {
-        return {
-            status: 500,
-            error: err,
-            data: err
-        };
-    }
-}   
 
 
-
- // ************************
-  // Metodo que activa las preguntas que fueron desactivdas
-  // *
-
-   
-  async function activarPreguntasPublicadas(nPregunta) {
-    try {
-        const data = await reg_preguntaspublicacionesportal.update({
-           bPublicada: 1,
-           bActivo: 1,
-           dFecha_UltimaModificacion: new Date(),
-           dFecha_Eliminacion: new Date(),
-        }, { where: { nPregunta: nPregunta, bActivo:0 } });
-
-        if (data === null || data.length < 1) {
-            return {
-                status: 500,
-                error: "Problema al activar la pregunta, verifique la informacion.",
-                data,
-            };
-        } else {
-            return {
-                status: 200,
-                error: "",
-                data:  data,
-            };
-        }
-    } catch (err) {
-        return {
-            status: 500,
-            error: err,
-            data: err
-        };
-    }
-}   
-
- // ************************
-  // Metodo que publica las preguntas
-  // *
 
 
 
 
 module.exports = {
 
-  getProyectos,
-  crearProyectos,
-  putProyectos,
-  eliminarPreguntasPublicadas,
-  activarPreguntasPublicadas,
-  //publicarPreguntas,
+  getSocios,
+  crearSocios,
+  putSocios,
+ 
+
   
 
 };

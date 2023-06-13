@@ -9,7 +9,7 @@ var api = express.Router();
 api.post('/perfil/voluntario/', Controller.post);
 api.post('/perfil/voluntarioU/', Controller.postU);
 // api.put('/perfil/cuentausuario/', Controller.put);
-// api.get('/perfil/:nIdUsuario', Controller.getUsuario);
-
+ api.get('/voluntarios', Controller.getVoluntarios);
+ api.post('/rechazo', Controller. enviarCorreoRechazo);
 
 module.exports = api;

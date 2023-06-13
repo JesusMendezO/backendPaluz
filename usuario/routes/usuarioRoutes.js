@@ -8,8 +8,10 @@ var api = express.Router();
 
 api.post('/perfil/usuario/', Controller.post);
 api.put('/perfil/cuentausuario/', Controller.put);
+api.put('/perfil/contrasena/', Controller.putContraseña);
 api.get('/perfil/:nIdUsuario', Controller.getUsuario);
 api.get('/usuarios', Controller.getUsuarios);
+api.get('/usuariostecnicos', Controller.getUsuariosTecnicos);
 api.get('/rol', Controller.getRoles);
 api.get('/tipo', Controller.getTipo)
 module.exports = api;

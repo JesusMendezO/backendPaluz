@@ -94,31 +94,33 @@ async function crearVoluntario(req) {
 }
 
 // Obtener datos de usuario invitado o administrador
-async function getUsuario(req) {
+async function getVoluntarios(req) {
 
     try {
+        const data = await sequelize.query(
+            `
+            SELECT
+            p.*, pt.descripcion
+          FROM
+            voluntariosregis p
+          LEFT JOIN profesiones pt
+            ON p.ocupacion=pt.idprofesiones
+            where p.revisado =0
+            `,
+            {
+                replacements: {},
+                type: QueryTypes.SELECT
+            }
+        );
 
-        const nIdUsuario = parseInt(req.params.nIdUsuario);
-
-        const data = await base_usuarios.findOne({
-            where: { nIdUsuario: nIdUsuario, bActivo: 1 }
-        });
-
-        if (data === null || data.length === 0) {
-            return {
-                status: 400,
-                error: 'La cuenta de usuario no existe',
-                data,
-            };
-        } else {
-            return {
-                status: 200,
-                error: '',
-                data,
-            };
-        }
+        return {
+            status: 200,
+            error: '',
+            data,
+        };
 
     } catch (err) {
+        // do something
         return {
             status: 500,
             error: err,
@@ -147,23 +149,7 @@ async function crearUsuario(req) {
             const token = auth.createToken(params.correo);
 
            
-    //         const salt = await bcrypt.genSalt(10);
-    //        const pass= params.password
-    //    let password = await bcrypt.hash(pass, salt);
-    //    checkUser(params.correo,params.password)
-    
-    //    async function checkUser(username, password) {
-    //     //... fetch user from a db etc.
-    
-    //     const match = await bcrypt.compare(password, password1);
-    
-    //     if(match) {
-    //         console.log('si es ')//login
-    //     }
-    
-    //     //...
-    // }
-  console.log(params)
+   
             data = await base_usuarios.create({
                 //idusuario: params.idusuario,
                nombres:params.nombres,
@@ -178,31 +164,35 @@ async function crearUsuario(req) {
                  fecha_modificacion: new Date(),
                 fecha_creacion: new Date()
             });
+            const data1 = await base_voluntariosregis.update({
+                revisado: 1,
+                fecha_modificacion: new Date(),
+            }, { where: { email: params.correo, } });
            
             if (data != '') {
-                datos ={
+                console.log(data,"Esta es la data")
+               let datos ={
                    email : params.correo,
                    nombre: params.nombres,
                    token: token
                 }
-            enviarCorreo(datos);
-    
+            console.log(datos)
+                enviarCorreo(datos);
                 return {
                     status: 200,
                     error: '',
-                    data,
+                    data:data,
                 };
             } else {
                 return {
                     status: 400,
                     error: 'Error al crear la cuenta',
-                    data,
+                    data:data,
                 };
             }
     
         } catch (err) {
-            console.log(data,"hola");
-            // do something
+            
             return {
                 status: 500,
                 error: err,
@@ -918,6 +908,7 @@ async function saveArchivoEmpresa(req) {
 
 
  async function enviarCorreo(params) {
+    console.log("se Ejecuto")
      try {
          const res = await correo.enviar(params);
          if (res === null || res.length < 1) {
@@ -942,11 +933,36 @@ async function saveArchivoEmpresa(req) {
          }
      }
  }
-
+ async function enviarCorreoRechazo(params) {
+    console.log("se Ejecuto")
+     try {
+         const res = await correo.rechazo(params);
+         if (res === null || res.length < 1) {
+             return {
+                 status: 404,
+                 error: 'El correo no existe',
+                 data: res,
+             };
+         } else {
+             return {
+                 status: 200,
+                 error: '',
+                 data: res
+             };
+         }
+     }
+     catch (err) {
+         return {
+             status: 500,
+             error: 'Error de conexion al servidor',
+             data: err
+         }
+     }
+ }
 module.exports = {
     crearUsuario,
     crearVoluntario,
-    getUsuario,
+    getVoluntarios,
     updateUsuario,
-    
+    enviarCorreoRechazo,
 };
