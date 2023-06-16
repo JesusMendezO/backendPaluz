@@ -14,7 +14,7 @@ const {QueryTypes} = require('sequelize');
         
         const data = await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
             where sexo='F'`,
             {
                 replacements: {
@@ -25,7 +25,7 @@ const {QueryTypes} = require('sequelize');
         );
         const data1 = await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
             where sexo='M'`,
             {
                 replacements: {
@@ -78,7 +78,7 @@ const {QueryTypes} = require('sequelize');
 
         const data = await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
             where sexo='F'`,
             {
                 replacements: {
@@ -140,7 +140,7 @@ SUM(CASE WHEN MONTH(niñoscinco.fecha_evaluacion) = 9 THEN 1 ELSE 0 END) AS Sep,
 SUM(CASE WHEN MONTH(niñoscinco.fecha_evaluacion) = 10 THEN 1 ELSE 0 END) AS Oct,
 SUM(CASE WHEN MONTH(niñoscinco.fecha_evaluacion) = 11 THEN 1 ELSE 0 END) AS Nov,
 SUM(CASE WHEN MONTH(niñoscinco.fecha_evaluacion) = 12 THEN 1 ELSE 0 END) AS Dic
-FROM paluz.niñoscinco
+FROM niñoscinco
 WHERE niñoscinco.fecha_evaluacion BETWEEN '2022-01-01' AND '4038-12-31'`,
             {
                 replacements: {
@@ -221,7 +221,7 @@ SUM(CASE WHEN niñoscinco.fecha_evaluacion BETWEEN '2023-07-03' and '2023-07-09'
 SUM(CASE WHEN niñoscinco.fecha_evaluacion BETWEEN '2023-07-10' and '2023-07-16'  THEN 1 ELSE 0 END) AS Semana29,
 SUM(CASE WHEN niñoscinco.fecha_evaluacion BETWEEN '2023-07-17' and '2023-07-23'  THEN 1 ELSE 0 END) AS Semana30,
 SUM(CASE WHEN niñoscinco.fecha_evaluacion BETWEEN '2023-07-24' and '2023-07-31'  THEN 1 ELSE 0 END) AS Semana31
-FROM paluz.niñoscinco
+FROM niñoscinco
 WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
             {
                 replacements: {
@@ -268,7 +268,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         
         const data = await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
             where sexo='F'`,
             {
                 replacements: {
@@ -279,7 +279,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data1 = await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
           where sexo='F' and discapacidad = "Si"`,
             {
                 replacements: {
@@ -290,7 +290,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data2= await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
   where sexo='F' and grupo_etnico="Indígena"`,
             {
                 replacements: {
@@ -301,7 +301,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data3= await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
   where sexo='F' and clasificacion_pb="Adecuado"`,
             {
                 replacements: {
@@ -312,7 +312,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data4= await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
   where sexo='F' and clasificacion_pb="Riesgo de Desnutrición"`,
             {
                 replacements: {
@@ -323,7 +323,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data5= await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
   where sexo='F' and clasificacion_pb="Desnutrición aguda moderada"`,
             {
                 replacements: {
@@ -334,7 +334,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
         );
         const data6= await sequelize.query(
             `
-            select count(*) from paluz.niñoscinco
+            select count(*) from niñoscinco
             where sexo='F' and clasificacion_pb="Desnutrición aguda severa"`,
             {
                 replacements: {

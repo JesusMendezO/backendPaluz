@@ -1,5 +1,6 @@
 'use strict';
 const base_proyectos = require('../../models/proyectos');
+const proyectos_usuarios = require('../../models/usuariosProyectos');
 const sequelize = require('../../db/db_sequelize');
 const {QueryTypes} = require('sequelize');
 const mysql = require('../../db/db_mysql');
@@ -67,8 +68,8 @@ const mysql = require('../../db/db_mysql');
 
     let data;
     const params = req.body;
-    console.log(req.body);
-   
+    const users = [params.coordinador,params.coordinador_ms,params.coordinador_cs,params.coordinador_logistica];
+    console.log(users.length);
        try {
   
    
@@ -94,7 +95,14 @@ const mysql = require('../../db/db_mysql');
              fecha_registro :new Date(),
              fecha_modificacion:new Date()
            });
-           console.log(data);
+           
+           
+           for (let i = 0; i < users.length; i++) {
+           
+            crearProyectoUsuarios(params.codigo,users[i]);
+
+           }
+           
            return {
              
                status: 200,
@@ -361,6 +369,54 @@ data = results;
         };
     }
 }
+
+// ************************
+  // Metodo que inserta las preguntas para luego publicarlas
+  // *
+
+  async function crearProyectoUsuarios(param,user) {
+
+    let data;
+    const params = param;
+    const users = user;
+    console.log(params);
+    console.log(users);
+  
+       try {
+  
+        
+            console.log('paso')
+             data = await proyectos_usuarios.create({
+                id_proyecto: params,
+                id_usuario:users,
+                estado: 1,
+                fecha_registro :new Date(),
+                fecha_modificacion:new Date()
+                //dFecha_UltimaModificacion: new Date(),
+             });
+         
+          
+         
+   
+           
+           console.log(data);
+           return {
+             
+               status: 200,
+               error: '',
+               data: data,
+           };
+   
+       } catch (err) {
+           return {
+               status: 500,
+               error: err,
+               data: err,
+           };
+       }
+  
+   }
+
 
 module.exports = {
 
