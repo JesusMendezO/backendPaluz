@@ -263,7 +263,7 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
   // Metodo que obtiene preguntas ha publicar
   // ************************
 
-  async function getNinos(req) {
+  async function getNinas(req) {
     try {
         
         const data = await sequelize.query(
@@ -385,7 +385,131 @@ WHERE  niñoscinco.fecha_evaluacion BETWEEN '2022-12-10' AND '2023-01-31'`,
     }
 }
 
+// ************************
+  // Metodo que obtiene preguntas ha publicar
+  // ************************
 
+  async function getNinos(req) {
+    try {
+        
+        const data = await sequelize.query(
+            `
+            select count(*) from niñoscinco
+            where sexo='M'`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data1 = await sequelize.query(
+            `
+            select count(*) from niñoscinco
+          where sexo='M' and discapacidad = "Si"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data2= await sequelize.query(
+            `
+            select count(*) from niñoscinco
+  where sexo='M' and grupo_etnico="Indígena"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data3= await sequelize.query(
+            `
+            select count(*) from niñoscinco
+  where sexo='M' and clasificacion_pb="Adecuado"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data4= await sequelize.query(
+            `
+            select count(*) from niñoscinco
+  where sexo='M' and clasificacion_pb="Riesgo de Desnutrición"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data5= await sequelize.query(
+            `
+            select count(*) from niñoscinco
+  where sexo='M' and clasificacion_pb="Desnutrición aguda moderada"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data6= await sequelize.query(
+            `
+            select count(*) from niñoscinco
+            where sexo='M' and clasificacion_pb="Desnutrición aguda severa"`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        
+
+
+
+       
+        console.log(data[0]["count(*)"])
+        const prueba ={
+            'Desnutricion aguda moderada':data5[0]["count(*)"],
+            //'Niñas':data[0]["count(*)"],
+           
+            'Vulnerabilidad':data4[0]["count(*)"],
+            
+            //'Poblacion Indigena':data2[0]["count(*)"],
+            'Peso adecuado':data3[0]["count(*)"],
+            //'Discapacidad':data1[0]["count(*)"],
+            
+            'Desnutricion aguda severa':data6[0]["count(*)"],
+           };
+
+        if (data.length === 0) {
+            return {
+                status: 400,
+                error: 'No hay preguntas frecuentes.',
+                data,
+            };
+        } else {
+            return {
+                status: 200,
+                error: '',
+                data: prueba
+            };
+        }
+    } catch (err) {
+        // do something
+        return {
+            status: 500,
+            error: err,
+            data: [],
+        };
+    }
+}
 
 
 
@@ -949,15 +1073,53 @@ async function ordenPregunta(nPregunta, params) {
         };
     }
 }
+async function getBeneficiarios(req) {
+const params = req.body;
+try {
+        
+    const data = await sequelize.query(
+        `
+        select * from  niñoscinco where cedula = ${params.cedula}`,
+        {
+            replacements: {
+               
+            },
+            type: QueryTypes.SELECT
+        }
+    );
 
+    if (data.length === 0) {
+        return {
+            status: 400,
+            error: 'No hay preguntas del portal.',
+            data,
+        };
+    } else {
+        return {
+            status: 200,
+            error: '',
+            data: data
+        };
+    }
+} catch (err) {
+    // do something
+    return {
+        status: 500,
+        error: err,
+        data: [],
+    };
+}
+}
 
 module.exports = {
 
   getPreguntas,
   getTotales,
   getNinos,
+  getNinas,
   getMeses,
   getSemanas,
+  getBeneficiarios,
   getPreguntasEliminar,
   getPreguntasPortal,
   crearPreguntasPublicadas,

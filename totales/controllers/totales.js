@@ -18,6 +18,14 @@ const service = require('../services/totales');
     const resultado = await service.getTotales(req);
     res.status(resultado.status).send(resultado.data);
 }
+// ************************
+  // Metodo que obtiene preguntas ha publicar en el portal
+  // ************************
+  async function getNinas(req, res) {
+    console.log('hola')
+    const resultado = await service.getNinas(req);
+    res.status(resultado.status).send(resultado.data);
+}
 
 // ************************
   // Metodo que obtiene preguntas ha publicar en el portal
@@ -165,14 +173,23 @@ async function buscarPrepuntasPublicadas(req, res) {
     const resultado = await service.getUltimaFechaPregunta(req);
     res.status(resultado.status).send(resultado.data);
 }
+// ************************
+  // Beneficiarios
+  // ************************
+async function getBeneficiarios(req, res) {
+  const resultado = await service.getBeneficiarios(req);
+  res.status(resultado.status).send(resultado.data);
+}
 
 module.exports = {
    
   getTotales, 
   getPreguntas,
   getNinos,
+  getNinas,
   getMeses,
   getSemanas,
+  getBeneficiarios,
   getPreguntasEliminar,
   getPreguntasPortal,
   postPreguntasPublicadas,
