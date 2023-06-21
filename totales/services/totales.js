@@ -1074,12 +1074,12 @@ async function ordenPregunta(nPregunta, params) {
     }
 }
 async function getBeneficiarios(req) {
-const params = req.body;
+//const params = req.body;
 try {
         
     const data = await sequelize.query(
         `
-        select * from  niñoscinco where cedula = ${params.cedula}`,
+        select * from  niñoscinco`,
         {
             replacements: {
                
@@ -1110,6 +1110,7 @@ try {
     };
 }
 }
+
 
 module.exports = {
 
