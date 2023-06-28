@@ -6,6 +6,7 @@ var api = express.Router();
 
 
 api.get('/totales/', Controller.getPreguntas);
+api.get('/mel/', Controller.getMel);
 api.get('/total/', Controller.getTotales);
 api.get('/ninos/', Controller.getNinos);
 api.get('/ninas/', Controller.getNinas);

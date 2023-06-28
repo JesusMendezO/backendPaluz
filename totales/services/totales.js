@@ -1112,9 +1112,71 @@ try {
 }
 
 
+ // ************************
+  // Metodo que obtiene preguntas ha publicar
+  // ************************
+
+  async function getMel(req) {
+    try {
+        
+        const data = await sequelize.query(
+            `
+            select count(*) from mel
+            where gestante='si'`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+        const data1 = await sequelize.query(
+            `
+            select count(*) from mel
+            where gestante='no'`,
+            {
+                replacements: {
+                   
+                },
+                type: QueryTypes.SELECT
+            }
+        );
+
+       
+        console.log(data[0]["count(*)"])
+        const prueba ={
+            'Gestantes':data[0]["count(*)"],
+            'No Gestantes':data1[0]["count(*)"],
+            
+          
+           };
+
+        if (data.length === 0) {
+            return {
+                status: 400,
+                error: 'No hay preguntas frecuentes.',
+                data,
+            };
+        } else {
+            return {
+                status: 200,
+                error: '',
+                data: prueba
+            };
+        }
+    } catch (err) {
+        // do something
+        return {
+            status: 500,
+            error: err,
+            data: [],
+        };
+    }
+}
 module.exports = {
 
   getPreguntas,
+  getMel,
   getTotales,
   getNinos,
   getNinas,

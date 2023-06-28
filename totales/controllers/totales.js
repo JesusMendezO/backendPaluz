@@ -180,10 +180,19 @@ async function getBeneficiarios(req, res) {
   const resultado = await service.getBeneficiarios(req);
   res.status(resultado.status).send(resultado.data);
 }
+ // ************************
+  // Metodo que obtiene preguntas ha publicar en el portal
+  // ************************
+  async function getMel(req, res) {
+    
+    const resultado = await service.getMel(req);
+    res.status(resultado.status).send(resultado.data);
+}
 
 module.exports = {
    
-  getTotales, 
+  getTotales,
+  getMel, 
   getPreguntas,
   getNinos,
   getNinas,
