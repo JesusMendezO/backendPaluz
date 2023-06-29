@@ -37,6 +37,8 @@ var voluntarios = require('./voluntarios/routes/voluntarios');
 var socios= require('./socios/routes/socios');
 var sector= require('./proyectos/routes/sector');
 var excel = require('./excel/routes/excel');
+var convocatoria = require('./convocatorias/routes/convocatoria');
+var equipos = require('./equipos/routes/equipos');
 // rutas
 //app.use("/api/usuarios", usuarioRoutes);
 app.use('/api', usuario);
@@ -50,4 +52,6 @@ app.use('/api',voluntarios);
 app.use('/api', excel);
 app.use('/api', socios);
 app.use('/api', sector);
+app.use('/api', convocatoria);
+app.use('/api', equipos);
 module.exports = app;
