@@ -53,5 +53,5 @@ app.use('/api', excel);
 app.use('/api', socios);
 app.use('/api', sector);
 app.use('/api', convocatoria);
- app.use('/api', equipos);
+app.use('/api', equipos);
 module.exports = app;
